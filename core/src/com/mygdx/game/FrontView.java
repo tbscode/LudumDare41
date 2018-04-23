@@ -31,7 +31,7 @@ public class FrontView {
 
         scale = ((float)Background_left.getRegionWidth())/((float)Background_left.getRegionHeight());
         width_tile = height_tile*scale;
-        Gdx.app.log("WIDTH",""+Background_right.getRegionWidth()+Background_left.getRegionWidth());
+        //Gdx.app.log("WIDTH",""+Background_right.getRegionWidth()+Background_left.getRegionWidth());
     }
 
     public void update(SpriteBatch sb){ //Update The Complete Front View
@@ -55,7 +55,7 @@ public class FrontView {
     public Vector2 Project_to_game_space(float x, float y) {
         y_new = height_pane - height_pane * (y / real_debth);
         x_hori = ((height_pane - y_new) / height_pane) * x_increase + x_constant;
-        Gdx.app.log("HORI", " " + x_hori);
+        //Gdx.app.log("HORI", " " + x_hori);
         if ((x - half_width) > 0) { //On the right side
             x_new = half_width + ((x - half_width) / half_width) * x_hori;
         } else if ((x - half_width) < 0) {

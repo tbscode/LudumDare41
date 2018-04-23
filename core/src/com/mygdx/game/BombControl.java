@@ -12,7 +12,7 @@ public class BombControl {
     ArrayList<Bomb> bombs;
 
     String dropMode = "random";
-    float drop_time = 1; //Till next Bomb Drops
+    public float drop_time = 3f; //Till next Bomb Drops
 
     float timer = 0;
 
@@ -20,7 +20,7 @@ public class BombControl {
         this.controller = controller;
 
         bombs = new ArrayList<Bomb>();
-        bombs.add(new Bomb(controller, 200, 0));
+        //bombs.add(new Bomb(controller, 200, 0));
     }
 
     //Updates and drops Bombs if necesarry

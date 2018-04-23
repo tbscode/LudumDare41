@@ -3,8 +3,13 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Bomb {
+    //Debug:
+    boolean draw_hitbox = false;
+    ShapeRenderer renderer;//can render the hitboxes
 
     GameController controller;
 
@@ -17,6 +22,9 @@ public class Bomb {
 
     boolean intact = true; //Falls if the Bom already hit the ground.
 
+    Rectangle hitBox;
+    float shrink_y = 0.14f;
+
     public Bomb(GameController controller, float drop_lane_x, float drop_loc_y){
         this.controller = controller;
 
@@ -28,7 +36,11 @@ public class Bomb {
         //Calculate size of Bomb:
         bomb_height = 250 -100*(drop_loc_y/330);
         bomb_width = bomb_height;
-
+        hitBox = new Rectangle((int)(drop_lane_x-bomb_height/2),(int)(drop_loc_y-bomb_width/2),(int)bomb_width,(int)bomb_height);
+        hitBox.height = (int)(bomb_height*shrink_y);
+        hitBox.y += (int)(bomb_height/2 - (bomb_height*shrink_y)/2);
+        renderer = new ShapeRenderer();
+        renderer.setProjectionMatrix(controller.main_cam.combined);
         //load the Assets:
         loadAssets();
     }
@@ -48,6 +60,11 @@ public class Bomb {
         if(y_bomb-bomb_height/2 < drop_loc_y){ // Here the bob is destroyed / The exloson animation will be generated
             explode();
         }
+        if(draw_hitbox) {
+            renderer.begin(ShapeRenderer.ShapeType.Line);
+            renderer.rect(hitBox.x, hitBox.y, hitBox.width, hitBox.height);
+            renderer.end();
+        }
         draw(sb);
     }
 
@@ -60,6 +77,9 @@ public class Bomb {
 
     public void explode(){ // Will do the Player explosion Damage Calculation.
         intact = false;
+        if(controller.player.checkIfBomHit(hitBox)){
+            controller.live_manager.LIVES--;
+        }
         controller.bomb_controler.destroyMe(this);
     }
 }

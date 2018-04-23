@@ -8,8 +8,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Player {
+    //Debug:
+    ShapeRenderer renderer;
+    boolean draw_hitbox = false;
+
+
+
     /** The Main Player **/
 
     GameController control;
@@ -46,6 +54,9 @@ public class Player {
     float x_min = 0, x_max = 0;
     float scale = 1; //The Ratio the Player has to its default size
 
+    Rectangle hitBox;
+    float hitbox_scale_x = 0.3f, hitbox_scale_y = 0.08f;
+
     public void loadAnimation(){
         player_atlas = control.getAtlas();
         // Normal Walk Frames:
@@ -75,7 +86,11 @@ public class Player {
         currentFrame = (TextureRegion) walk_A.getKeyFrame(0f);
         player_container = new Sprite(currentFrame);
 
-        x_max = control.getGameWidth()-2*control.frontView.width_tile;
+        x_max = control.getGameWidth()-2*control.frontView.width_tile-default_width;
+
+        hitBox = new Rectangle();
+        renderer = new ShapeRenderer();
+        renderer.setProjectionMatrix(control.main_cam.combined);
     }
 
     TextureRegion currentFrame_A,currentFrame_B;
@@ -94,6 +109,16 @@ public class Player {
 
         update_movement(); //Makes the Player Move, when controlled
         update_dimensions();
+        hitBox.set(x_hori, y_hori, width_flat, height_flat);
+        hitBox.height = (int)(height_flat*hitbox_scale_y);
+        hitBox.width = (int)(width_flat*hitbox_scale_x);
+        hitBox.x += (int) (width_flat/2 - hitBox.width/2);
+        if(draw_hitbox) {
+            renderer.begin(ShapeRenderer.ShapeType.Line);
+            renderer.rect(hitBox.x, hitBox.y, hitBox.width, hitBox.height);
+            renderer.end();
+        }
+
         draw(sb);
 
 
@@ -173,5 +198,11 @@ public class Player {
         height_flat = default_height - 150*scale;
         width_flat = default_width -150*scale;
 
+    }
+
+    public boolean checkIfBomHit(Rectangle hitbox_bomb){
+        if(hitBox.overlaps(hitbox_bomb))
+            return true;
+        return false;
     }
 }

@@ -17,6 +17,7 @@ public class GameController {
      *  -Camera Views
      *  -Asset Loading
      */
+    public boolean GAME_OVER = false;
     boolean loaded = false; //Makes the game controller wait untill game loaded
 
     public GameController(){
@@ -45,6 +46,7 @@ public class GameController {
         player.update(sb);
         enemy_control.update(sb);
         score_manager.update(sb);
+        live_manager.update(sb);
 
     }
     //=================Load-Game==============================================
@@ -57,6 +59,7 @@ public class GameController {
     public EnemyControl enemy_control; //Conrolls all the enemys
 
     ScoreManager score_manager; //Manages and draws the Game-Score
+    Lives live_manager; // Manages Live Points
     public void loadGameView_main(){
         frontView = new FrontView(this);
         player = new Player(this);
@@ -68,6 +71,7 @@ public class GameController {
         enemy_control = new EnemyControl(this);
 
         score_manager = new ScoreManager(this);
+        live_manager = new Lives(this);
     }
     //=========================================================================
 
@@ -100,10 +104,6 @@ public class GameController {
 
             if(Input.Keys.SPACE==values[0])
                 player.draw_weapon(true);
-            if(Input.Keys.W==values[0])
-                player.dir_y=2;
-            if(Input.Keys.S==values[0])
-                player.dir_y = 1;
             if(Input.Keys.D==values[0])
                 player.dir_x = 2;
             if(Input.Keys.A==values[0])
@@ -113,10 +113,6 @@ public class GameController {
         if(type.equals("keyUp")){
             if(Input.Keys.SPACE==values[0])
                 player.draw_weapon(false);
-            if(Input.Keys.W==values[0])
-                player.dir_y = 0;
-            if(Input.Keys.S==values[0])
-                player.dir_y = 0;
             if(Input.Keys.D==values[0])
                 player.dir_x = 0;
             if(Input.Keys.A==values[0])
@@ -135,7 +131,7 @@ public class GameController {
             scope.x_draw = x_touch;
             scope.y_draw = y_touch;
 
-            enemy_control.checkIfEnemyInScope(x_touch,y_touch,Gdx.input.isTouched());//To shoot enemys trough scope
+            enemy_control.checkIfEnemyInScope(x_touch,y_touch,Gdx.input.justTouched());//To shoot enemys trough scope
 
             //Chaning Player position acordingly:
             //player.touched = true;
