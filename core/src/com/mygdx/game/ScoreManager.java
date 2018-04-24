@@ -24,12 +24,17 @@ public class ScoreManager {
 
        layout = new GlyphLayout(font,"0");
 
+        //Sets the beginning difficulty
+        control.enemy_control.spawn_speed = 2f;
+        control.enemy_control.spawn_y_speed = 1.6f;
+        control.bomb_controler.drop_time = 1.9f;
+
     }
 
-    float dificulty_inrease = 20;
+    float dificulty_inrease = 35;
     float max_difficulty;
     float difficulty_timer = 0;
-    int difficulty = 0;
+    int difficulty = 1;
 
     public void increaseDifficulty(){
         difficulty++;
@@ -37,41 +42,41 @@ public class ScoreManager {
 
         switch (difficulty){
             case 1:
-                control.enemy_control.spawn_speed = 2.4f;
-                control.enemy_control.spawn_y_speed = 1.4f;
-                control.bomb_controler.drop_time = 2.8f;
+                control.enemy_control.spawn_speed = 1.8f;
+                control.enemy_control.spawn_y_speed = 1.7f;
+                control.bomb_controler.drop_time = 1.8f;
                 time_bonus = 2;
                 break;
             case 2:
-                control.enemy_control.spawn_speed = 2.1f;
-                control.enemy_control.spawn_y_speed = 1.8f;
-                control.bomb_controler.drop_time = 2.4f;
+                control.enemy_control.spawn_speed = 1.4f;
+                control.enemy_control.spawn_y_speed = 2.2f;
+                control.bomb_controler.drop_time = 1.2f;
                 time_bonus = 4;
                 break;
             case 3:
-                control.enemy_control.spawn_speed = 1.8f;
-                control.enemy_control.spawn_y_speed = 2;
-                control.bomb_controler.drop_time = 2.0f;
+                //Sets the beginning difficulty
+                control.enemy_control.spawn_speed = 1.4f;
+                control.enemy_control.spawn_y_speed = 2.4f;
+                control.bomb_controler.drop_time = 0.8f;
                 time_bonus = 7;
                 break;
             case 4:
-                control.enemy_control.spawn_speed = 1.4f;
-                control.enemy_control.spawn_y_speed = 2.2f;
-                control.bomb_controler.drop_time = 1.8f;
+                control.enemy_control.spawn_speed = 1.2f;
+                control.enemy_control.spawn_y_speed = 2.5f;
+                control.bomb_controler.drop_time = 0.8f;
                 time_bonus = 11;
                 break;
             case 5:
-                control.enemy_control.spawn_speed = 1f;
-                control.enemy_control.spawn_y_speed = 2.6f;
-                control.bomb_controler.drop_time = 1.6f;
-                time_bonus = 17;
+                control.enemy_control.spawn_speed = 1.0f;
+                control.enemy_control.spawn_y_speed = 2.5f;
+                control.bomb_controler.drop_time = 0.8f;
+                time_bonus = 16;
                 break;
             case 6:
-                control.enemy_control.spawn_speed = 0.8f;
-                control.enemy_control.spawn_y_speed = 3f;
+                control.enemy_control.spawn_speed = 0.9f;
+                control.enemy_control.spawn_y_speed = 2.7f;
                 control.bomb_controler.drop_time = 0.7f;
-                time_bonus = 20;
-                break;
+                time_bonus = 25;
         }
     }
 

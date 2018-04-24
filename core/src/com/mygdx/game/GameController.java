@@ -7,9 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-
-import java.awt.Point;
-import java.awt.Rectangle;
+import com.badlogic.gdx.math.Rectangle;
 
 public class GameController {
 
@@ -127,7 +125,7 @@ public class GameController {
 
         //Gdx.app.log("WOW"," X"+x_touch+" Y:"+y_touch);
         //Touch handeling:
-        if(rect_front_view.contains(new Point((int)x_touch,(int)y_touch))){
+        if(rect_front_view.contains((int)x_touch,(int)y_touch)){
             scope.x_draw = x_touch;
             scope.y_draw = y_touch;
 
